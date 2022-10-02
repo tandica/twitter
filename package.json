@@ -27,7 +27,7 @@
     "react-tiny-link": "^3.6.0",
     "sass": "^1.49.9"
   },
-  "proxy": "https://your-backend.herokuapp.com",
+  "proxy": "https://twitter-backend-tandi.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
