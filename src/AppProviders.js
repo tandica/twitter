@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/main.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevTools } from "react-query/devtools";
+import { AuthProvider } from "./context/auth-context";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,8 +20,10 @@ const queryClient = new QueryClient({
 export default function AppProviders({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevTools />
+      <AuthProvider>
+        {children}
+        <ReactQueryDevTools />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
