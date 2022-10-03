@@ -1,25 +1,45 @@
-// import CreatePostModal from "pages/CreatePostModal";
-// import Explore from "pages/Explore";
-// import Notifications from "pages/Notifications";
-// import PostDetail from "pages/PostDetail";
-// import PostLikes from "pages/PostLikes";
-// import PostReposts from "pages/PostReposts";
-// import SearchResults from "pages/SearchResults";
-// import UserDetail from "pages/UserDetail";
-// import UserFollowers from "pages/UserFollowers";
-// import UserFriends from "pages/UserFriends";
-// import Home from "pages/Home";
-// import ProfileModal from "pages/ProfileModal";
+import CreatePostModal from "pages/CreatePostModal";
+import Explore from "pages/Explore";
+import Notifications from "pages/Notifications";
+import PostDetail from "pages/PostDetail";
+import PostLikes from "pages/PostLikes";
+import PostReposts from "pages/PostReposts";
+import SearchResults from "pages/SearchResults";
+import UserDetail from "pages/UserDetail";
+import UserFollowers from "pages/UserFollowers";
+import UserFriends from "pages/UserFriends";
+import Home from "pages/Home";
+import ProfileModal from "pages/ProfileModal";
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import MediaQuery from "react-responsive";
 import Sidebar from "components/Sidebar";
+import { Switch, Route } from "react-router-dom";
 
 export default function Routes() {
   return (
     <Row>
       <Col className="px-sm-4" sm="12" lg="8">
-        <Col className="border">{/* Routes */}</Col>
+        <Col className="border">
+          <Switch>
+            {/* Tweet Routes */}
+            <Route path="/posts/:postId/likes" component={PostLikes} />
+            <Route path="/posts/:postId/reposts" component={PostReposts} />
+            <Route path="/posts/:postId" component={PostDetail} />
+
+            {/* User Routes */}
+            <Route path="/user/:username/friends" component={UserFriends} />
+            <Route path="/user/:username/followers" component={UserFollowers} />
+            <Route path="/user/:username" component={UserDetail} />
+
+            <Route path="/" component={Home} />
+            <Route path="/explore" component={Explore} />
+            <Route path="/search" component={SearchResults} />
+            <Route path="/notifications" component={Notifications} />
+            <Route path="/settings/profile" component={ProfileModal} />
+          </Switch>
+          <Route path="/compose/post" component={CreatePostModal} />
+        </Col>
       </Col>
 
       <MediaQuery minWidth={992}>
