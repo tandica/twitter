@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Figure, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { signup } from "../utils/api-client";
 import { validate } from "../utils/validate";
 
 export default function Signup() {
@@ -10,14 +11,21 @@ export default function Signup() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
+      setLoading(true);
+      setError(null);
+
       const rawFullname = event.target.elements.fullname.value;
       const rawUsername = event.target.elements.username.value;
       const rawPassword = event.target.elements.password.value;
+
       const fullname = validate(rawFullname, "username", { min_length: 4 });
       const username = validate(rawUsername, "username", { min_length: 4 });
       const password = validate(rawPassword, "username", { min_length: 8 });
+      await signup({ fullname, username, password });
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -33,7 +41,7 @@ export default function Signup() {
         />
       </Figure>
       <h5 className="font-weight-bolder">See what’s happening now.</h5>
-      <fieldset>
+      <fieldset disabled={isLoading}>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="username">
             <Form.Label>
@@ -67,7 +75,7 @@ export default function Signup() {
               Already have an account? <Link to="/login">Log in instead</Link>
             </small>
             <br />
-            <small className="text-danger">error</small>
+            <small className="text-danger">{error}</small>
           </p>
           <div className="d-flex flex-column align-items-center">
             <button
