@@ -3,7 +3,7 @@ import { faSmile } from "@fortawesome/free-regular-svg-icons/faSmile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import QuotedPost from "components/QuotedPost";
 import { Picker } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
+// import "emoji-mart/css/emoji-mart.css";
 import React from "react";
 import { Alert, Media, Modal, OverlayTrigger, Popover } from "react-bootstrap";
 
