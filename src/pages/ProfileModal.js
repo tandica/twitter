@@ -163,6 +163,7 @@ export default function ProfileModal() {
                 <div />
                 <div className="right">
                   <button
+                    disabled={isLoading}
                     type="submit"
                     className="btn btn-primary rounded-pill px-3 py-1 font-weight-bold"
                   >
