@@ -1,11 +1,13 @@
 import React from "react";
 import { Alert, Figure, Form, Modal, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAuthUser } from "../context/auth-context";
 import { updateUserDetails } from "../utils/api-client";
 import { uploadMedia } from "../utils/upload";
 import { validate } from "../utils/validate";
 
 export default function ProfileModal() {
+  const history = useHistory();
   const authUser = useAuthUser();
   const url = authUser?.entities.url.urls[0]?.url;
   const [isLoading, setLoading] = React.useState(false);
@@ -17,6 +19,9 @@ export default function ProfileModal() {
   const [website, setWebsite] = React.useState(url);
   const [profile, setProfile] = React.useState(
     authUser?.profile_image_url_https
+  );
+  const redirected = new URLSearchParams(history.location.search).get(
+    "redirected"
   );
 
   async function handleSubmit(event) {
@@ -46,10 +51,20 @@ export default function ProfileModal() {
         profile_image_url_https: profile,
       };
       await updateUserDetails(user);
+      handleCloseModal();
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  //close modal
+  function handleCloseModal() {
+    if (redirected === "true") {
+      history.push("/home");
+    } else {
+      history.goBack();
     }
   }
 
@@ -96,7 +111,7 @@ export default function ProfileModal() {
       <Modal.Header closeButton className="py-2">
         <Modal.Title>
           <small className="font-weight-bold">
-            {!"redirected" ? "Edit profile" : "Complete your profile"}
+            {!redirected ? "Edit profile" : "Complete your profile"}
           </small>
         </Modal.Title>
       </Modal.Header>
